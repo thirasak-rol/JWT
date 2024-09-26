@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt"
 	"github.com/thirasak-rol/jwt/src/service"
 )
 
@@ -19,8 +19,10 @@ func AuthorizeJWT() gin.HandlerFunc {
 			claims := token.Claims.(jwt.MapClaims)
 			fmt.Println(claims)
 		} else {
-			fmt.Println("testing")
+			fmt.Println("--- AuthorizeJWT Error ---")
 			fmt.Println(err)
+			fmt.Println("Client IP:", c.ClientIP())
+			fmt.Println("--------------------------")
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 
